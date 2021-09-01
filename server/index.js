@@ -66,6 +66,8 @@ app.post('/api/users/login', (req, res) => {
     })
 })
 
+//role 1 Admin
+//role 0 general users
 
 //Authentication parts
 app.get('/api/users/auth', auth, (req, res) => {    //auth : midleware -> 
@@ -76,9 +78,7 @@ app.get('/api/users/auth', auth, (req, res) => {    //auth : midleware ->
         isAuth: true,
         email: req.user.email,
         name: req.user.name,
-        lastname: req.user.lastname,
-        role: req.user.role,
-        image: req.user.image
+        role: req.user.role
       })
     })
 
