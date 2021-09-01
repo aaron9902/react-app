@@ -12,7 +12,7 @@ function LandingPage(props) {
     }, [])
 
 
-    const onClickHandler = () => {
+    const onLogoutClickHandler = () => {
         axios.get('/api/users/logout')
         .then(response => {
             if(response.data.success) {
@@ -22,11 +22,19 @@ function LandingPage(props) {
             }
         })
     }
+    const onRegisterClickHandler = () => {
+                props.history.push("/register") 
+    }
+    const onLoginClickHandler = () => {
+                props.history.push("/login")
+    }
     
      return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' ,height: '100vh'}}>
                 <h2>Start Page</h2>
-                <button onClick ={onClickHandler}> Logout </button>
+                <button onClick ={onRegisterClickHandler}> Register </button>
+                <button onClick ={onLoginClickHandler}> Login </button>
+                <button onClick ={onLogoutClickHandler}> Logout </button>
         </div>
     )
 }
