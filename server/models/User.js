@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema({
 
     email: {
         type: String,
-        trim: true, //no empty space
+        trim: true, // No empty space
         unique: 1
     },
     password: {
@@ -31,33 +31,33 @@ const userSchema = mongoose.Schema({
     }
 })
 
-//encrypts the password before save. ** Before the index.js's save function works
+// Encrypts the password before save. ** Before the index.js's save function works
 userSchema.pre('save', function(next){
     var user = this;
 
-    if(user.isModified('password')){//must encrypt when changing the password. shouldn't encrypt the password when changing the email
+    if(user.isModified('password')){// Must encrypt when changing the password. shouldn't encrypt the password when changing the email
         bcrypt.genSalt(saltRounds, function(err,salt){
             if(err) return next(err)
 
 
-            //user.password : password typed from the client
-            //hash : encrypted password
+            // user.password : password typed from the client
+            // hash : encrypted password
             bcrypt.hash(user.password, salt, function(err, hash){
                 if(err) return next(err)
                 user.password = hash        //swap to hash
                 next()
             })
         })
-    } else{ //skips when changing the other things
+    } else{ // Skips when changing the other things
         next()
     }
 }) 
 
 
-//defining the function   
+// Defining the function   
 userSchema.methods.comparePassword = function(plainPassword, cb){   //cb : callback function
     
-    //unable to decrypt the password -> plain password needs to be encrypted and compared.
+    // Unable to decrypt the password -> plain password needs to be encrypted and compared.
     bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
         if (err) return cb(err);
         cb(null, isMatch);
@@ -67,7 +67,7 @@ userSchema.methods.comparePassword = function(plainPassword, cb){   //cb : callb
 userSchema.methods.generateToken = function(cb) {
     var user = this;
     
-    //creating token using jsonwebtoken
+    // Creating token using jsonwebtoken
     var token = jwt.sign(user._id.toHexString(),  'secretToken')
 
     user.token = token
@@ -81,21 +81,21 @@ userSchema.methods.generateToken = function(cb) {
 userSchema.statics.findByToken = function(token,cb){
     var user = this;
 
-    //decode token
+    // Decode token
     jwt.verify(token, 'secretToken', function(err,decoded) {
 
-        //find the user using the decoded user token
-        //compare the decoded token with the database user.
+        // Find the user using the decoded user token
+        // Compare the decoded token with the database user.
 
 
-        //find using ID and token (findOne is Mongodb function)
+        // Find using ID and token (findOne is Mongodb function)
         user.findOne({"_id" : decoded, "token": token}, function(err,user){
-            if(err) return cb(err) ; //if error occurs, send it to call back
-            cb(null, user)          //no error -> user info
+            if(err) return cb(err) ; // If error occurs, send it to call back
+            cb(null, user)          // No error -> user info
         })
     })
 }
 
 const User = mongoose.model('User', userSchema)
 
-module.exports = {User} // this schema can be used from the other files
+module.exports = {User} // This schema can be used from the other files
