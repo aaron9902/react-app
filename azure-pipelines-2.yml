@@ -7,11 +7,19 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
+strategy:
+  matrix:
+    node_16_x:
+      node_version: 16.6.1
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: NodeTool@0 
+  inputs:
+    versionSpec: $(node_version)
+
+- script: npm install
+  displayName: 'All package installed'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
