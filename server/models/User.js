@@ -96,6 +96,9 @@ userSchema.statics.findByToken = function(token,cb){
     })
 }
 
+// this is an edit to test running my pipeline - Nick V
+//This is a testing push
+
 const User = mongoose.model('User', userSchema)
 
 module.exports = {User} // This schema can be used from the other files
