@@ -9,9 +9,23 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '6.x'
+    checkLatest: true
+
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: '/'
+
+
+
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: npm install
+- script: npm run dev
+  displayName: 'Backend and Frontend start'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
