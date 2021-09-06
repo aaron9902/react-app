@@ -6,10 +6,6 @@
 trigger:
 - main
 
-pool:
-  vmImage: ubuntu-latest
-
-
 - task: NodeTool@0
   inputs:
     versionSpec: '6.x'
@@ -20,6 +16,8 @@ pool:
     command: 'install'
     workingDir: '/'
 
+pool:
+  vmImage: ubuntu-latest
 
 
 steps:
