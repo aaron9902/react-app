@@ -19,10 +19,7 @@ steps:
     versionSpec: $(node_version)
 
 - script: npm install
-
-
-- script: npm run dev
-  displayName: 'Backend and Frontend start'
+  displayName: 'All package installed'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
