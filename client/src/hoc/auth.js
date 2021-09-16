@@ -3,8 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { auth } from '../_actions/user_action';
 
-export default function (SpecificComponent, option, adminRoute = null) {
-
+export default function foo(SpecificComponent, option, adminRoute = null) {
     //null    =>  everyone can access this page (landing page and About page)
     //true    =>  logged in users can access this page ()
     //false   =>  logged in users CANNOT access this page (register and login page)
@@ -12,7 +11,6 @@ export default function (SpecificComponent, option, adminRoute = null) {
         const dispatch = useDispatch();
 
         useEffect(() => {
-
             dispatch(auth()).then(response => {
                 console.log(response)
                 //not logged in status
@@ -28,10 +26,9 @@ export default function (SpecificComponent, option, adminRoute = null) {
                         if (option === false)
                             props.history.push('/')
                     }
-                } 
+                }
             })
-        }, [])
-
+        })
         return (
             <SpecificComponent />
         )

@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react';
-import './App.css';
 import { Route, Switch} from "react-router-dom";
 import Auth from './hoc/auth'
 
