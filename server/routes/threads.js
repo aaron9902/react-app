@@ -31,7 +31,8 @@ router.post('/', async (req, res) => {
     const thread = new Thread({
         title: req.body.title,
         desc: req.body.desc,
-        forumParent: req.body.forumParent
+        forumParent: req.body.forumParent,
+        userParent: req.body.userParent
     })
     try {
         const newThread = await thread.save();

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Menu } from 'antd';
 import axios from 'axios';
-import { USER_SERVER } from '../../../../Config';
+import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
@@ -22,10 +22,10 @@ function RightMenu(props) {
   if (user.userData && !user.userData.isAuth) {
     return (
       <Menu mode={props.mode}>
-        <Menu.Item key="mail">
+        <Menu.Item>
           <a href="/login">Signin</a>
         </Menu.Item>
-        <Menu.Item key="app">
+        <Menu.Item>
           <a href="/register">Signup</a>
         </Menu.Item>
       </Menu>
@@ -33,7 +33,7 @@ function RightMenu(props) {
   } else {
     return (
       <Menu mode={props.mode}>
-        <Menu.Item key="logout">
+        <Menu.Item>
           <a onClick={logoutHandler}>Logout</a>
         </Menu.Item>
       </Menu>

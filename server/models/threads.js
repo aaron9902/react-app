@@ -17,6 +17,10 @@ const threadSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Forum'
     },
+    userParent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     upvotes: {
         type: Number,
         default: 0

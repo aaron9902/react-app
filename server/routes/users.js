@@ -4,6 +4,22 @@ const router = express.Router();
 const { auth } = require('../middleware/auth');
 const { User } = require('../models/User');
 
+
+//get all users
+router.get('/', async (req, res) => {
+    try {
+        const users = await User.find();
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+//get user by ID
+router.get('/search/:id', getUser, (req, res) => {
+    res.json(res.user);
+});
+
 router.post('/register', (req, res) => {
 
     const user = new User(req.body)
@@ -75,5 +91,19 @@ router.get('/logout', auth, (req, res) => {
             })
         })
 })
+
+// Helper function that checks if a user exists, if so, returns that user object
+async function getUser(req, res, next) {
+    let user;
+    try {
+        user = await User.findById(req.params.id);
+        if (user == null)
+            return res.status(404).json({ message: 'User does not exist' });
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+    res.user = user;
+    next();
+}
 
 module.exports = router;
