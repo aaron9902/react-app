@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Profiler, Suspense } from 'react';
 import { Route, Switch } from "react-router-dom";
 import Auth from './hoc/auth'
 
@@ -11,6 +11,7 @@ import Forums from './components/forums'
 import ForumSelect from './components/forumSelect'
 import ThreadSelect from './components/threadSelect'
 import PostThread from './components/postThread'
+import Profile from './components/profile'
 
 //Route Options
 //null    =>  everyone can access this page (landing page and About page)
@@ -31,6 +32,8 @@ function App() {
           <Route exact path="/forums/:forumID/thread/:threadID" component={Auth(ThreadSelect, null)} />
 
           <Route exact path="/forums/:id/post" component={Auth(PostThread, true)} />
+
+          <Route exact path="/profile/:id" component={Auth(Profile, null)} />
         </Switch>
       </div>
       <Footer />

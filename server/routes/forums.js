@@ -24,13 +24,13 @@ router.get('/:id', getForum, (req, res) => {
 
 //get forum by name (have to include /name_search as it thinks its searching for ID)
 router.get('/name_search/:title', async (req, res) => {
-    const threads = await Forum.find({ title: { $regex: (req.params.title) } });
+    const threads = await Forum.find({ title: { $regex: (req.params.title), $options: 'i' } });
     res.json(threads);
 });
 
 // Get threads by forum ID
 router.get('/:id/threads', async (req, res) => {
-    const threads = await Thread.find({ forumParent: (req.params.id) });
+    const threads = await Thread.find({ forumParent: (req.params.id) }).populate('userParent');
     res.json(threads);
 });
 

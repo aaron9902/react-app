@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { auth } = require('../middleware/auth');
 const { User } = require('../models/User');
-
+const Thread = require('../models/threads');
 
 //get all users
 router.get('/', async (req, res) => {
@@ -18,6 +18,21 @@ router.get('/', async (req, res) => {
 //get user by ID
 router.get('/search/:id', getUser, (req, res) => {
     res.json(res.user);
+});
+
+//get user's name by ID
+router.get('/name/:id', getUser, (req, res) => {
+    res.json(res.user.name);
+});
+
+//get user's created threads if any
+router.get('/threads/:id', getUser, async (req, res) => {
+    try {
+        const threads = await Thread.find({ userParent: (req.params.id)}).populate('forumParent');
+        res.json(threads)
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 });
 
 router.post('/register', (req, res) => {

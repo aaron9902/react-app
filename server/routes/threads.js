@@ -21,7 +21,7 @@ router.get('/:id', getThread, (req, res) => {
 router.get('/:id/:name', async (req, res) => {
     const threads = await Thread.find({ 
         forumParent: (req.params.id),
-        title: { $regex: (req.params.name) } 
+        title: { $regex: (req.params.name), $options: 'i' } 
     });
     res.json(threads);
 });
@@ -72,7 +72,7 @@ router.delete('/:id', getThread, async (req, res) => {
 async function getThread(req, res, next) {
     let thread;
     try {
-        thread = await Thread.findById(req.params.id);
+        thread = await Thread.findById(req.params.id).populate('forumParent userParent');
         if (thread == null)
             return res.status(404).json({ message: 'Thread does not exist' });
     } catch (err) {

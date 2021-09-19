@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { BrowserRouter as Router, Link, useParams } from "react-router-dom";
 import axios from 'axios';
+import moment from 'moment';
 
 function ForumSelect() {
   const { id } = useParams(); //get forum id from the url i.e. localhost:3000/forums/:id (see the route declared in App.js)
@@ -15,7 +16,9 @@ function ForumSelect() {
       if (isMounted) setForumData(res.data);
     });
     axios.get('/api/forums/' + id + '/threads').then((res) => {
-      if (isMounted) setThreadData(res.data);
+      if (isMounted) {
+        setThreadData(res.data);
+      }
     });
     return () => { isMounted = false };
   }, [])
@@ -41,12 +44,14 @@ function ForumSelect() {
       />
       <button type="button" onClick={find}>Search</button>
       <ul>
-        {threadData.map(thread => (
+        {threadData.map(thread => ( //need to somehow display thread author's username instead of id
           <li key={thread._id}>
             <Link to={"/forums/" + id + '/thread/' + thread._id}>
               <h3>{thread.title}</h3>
-              <p>{thread.date} by: Username</p>
             </Link>
+            <p>Posted at {moment(thread.date).format('MMM Do YYYY')}, by
+              <Link to={'/profile/' + thread.userParent._id}> {thread.userParent.name}</Link>
+            </p>
           </li>
         ))}
       </ul>
