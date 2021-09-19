@@ -20,15 +20,15 @@ function ThreadSelect() {
   console.log(threadData);
 
   return (
-    (threadData == "" ? null : ( //wait for threadData to be fetched
+    threadData == "" ? null : ( //wait for threadData to be fetched
       <div>
         <Link to={'/forums/' + forumID}>
           <h1>{threadData.forumParent.title}</h1>
         </Link>
         <h2>{threadData.title}</h2>
         <p style={{ whiteSpace: 'pre-line' }}>{threadData.desc}</p>
-        <p>Posted at {moment(threadData.date).format('MMM Do YYYY')}, by 
-          <Link to={'/profile/' + threadData.userParent._id}> {threadData.userParent.name}</Link>
+        <p>Posted at {moment(threadData.date).format('MMM Do YYYY')}
+          , by <Link to={'/profile/' + threadData.userParent._id}> {threadData.userParent.name}</Link>
         </p>
         <div>
           <textarea
@@ -42,7 +42,7 @@ function ThreadSelect() {
         </div>
         <p>Comments go here</p>
       </div>
-    ))
+    )
   );
 }
 

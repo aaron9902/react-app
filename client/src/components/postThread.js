@@ -37,7 +37,7 @@ function PostThread() {
   }
 
   return (
-    (forumData == "" ? null : ( //waits for forumData to be fetched before rendering the page (static elements were rendered immediately)
+    forumData == "" ? null : ( //waits for forumData to be fetched before rendering the page (static elements were rendered immediately)
       <div>
         <h1>{forumData.title}</h1>
         <p>{forumData.desc}</p>
@@ -74,7 +74,7 @@ function PostThread() {
           </div>
         )}
       </div>
-    ))
+    )
   );
 }
 

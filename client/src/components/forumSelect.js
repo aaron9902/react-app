@@ -30,32 +30,34 @@ function ForumSelect() {
   }
 
   return ( //display forum that was clicked on and its threads
-    <div>
-      <h1>{forumData.title}</h1>
-      <p>{forumData.desc}</p>
-      <Link to={"/forums/" + id + "/post"}>
-        <p>Post a thread</p>
-      </Link>
-      <input
-        type="text"
-        placeholder="Search thread name"
-        value={searchName}
-        onChange={e => setSearchName(e.target.value)} //constantly updates searchName to whatever is being tpyed in
-      />
-      <button type="button" onClick={find}>Search</button>
-      <ul>
-        {threadData.map(thread => ( //need to somehow display thread author's username instead of id
-          <li key={thread._id}>
-            <Link to={"/forums/" + id + '/thread/' + thread._id}>
-              <h3>{thread.title}</h3>
-            </Link>
-            <p>Posted at {moment(thread.date).format('MMM Do YYYY')}, by
-              <Link to={'/profile/' + thread.userParent._id}> {thread.userParent.name}</Link>
-            </p>
-          </li>
-        ))}
-      </ul>
-    </div>
+    forumData == "" ? null : (
+      <div>
+        <h1>{forumData.title}</h1>
+        <p>{forumData.desc}</p>
+        <Link to={"/forums/" + id + "/post"}>
+          <p>Post a thread</p>
+        </Link>
+        <input
+          type="text"
+          placeholder="Search thread name"
+          value={searchName}
+          onChange={e => setSearchName(e.target.value)} //constantly updates searchName to whatever is being tpyed in
+        />
+        <button type="button" onClick={find}>Search</button>
+        <ul>
+          {threadData.map(thread => ( //need to somehow display thread author's username instead of id
+            <li key={thread._id}>
+              <Link to={"/forums/" + id + '/thread/' + thread._id}>
+                <h3>{thread.title}</h3>
+              </Link>
+              <p>Posted at {moment(thread.date).format('MMM Do YYYY')}
+                , by <Link to={'/profile/' + thread.userParent._id}> {thread.userParent.name}</Link>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
   );
 }
 

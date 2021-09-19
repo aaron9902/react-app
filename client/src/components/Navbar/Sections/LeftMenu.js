@@ -10,9 +10,6 @@ function LeftMenu(props) {
       <Menu.Item>
         <a href="/">Home</a>
       </Menu.Item>
-      <Menu.Item>
-        <a href="/forums">Forums</a>
-      </Menu.Item>
       {user.userData && user.userData.isAuth ? (
         <Menu.Item>
           <a href={"/profile/" + user.userData._id}>Profile</a>
