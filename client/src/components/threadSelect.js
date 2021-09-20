@@ -5,7 +5,6 @@ import axios from 'axios';
 import moment from 'moment';
 
 function ThreadSelect() {
-  const { forumID } = useParams();
   const { threadID } = useParams(); //getting threadID from url
   const [threadData, setThreadData] = useState("");
 
@@ -22,7 +21,7 @@ function ThreadSelect() {
   return (
     threadData == "" ? null : ( //wait for threadData to be fetched
       <div>
-        <Link to={'/forums/' + forumID}>
+        <Link to={'/forums/' + threadData.forumParent._id}>
           <h1>{threadData.forumParent.title}</h1>
         </Link>
         <h2>{threadData.title}</h2>
