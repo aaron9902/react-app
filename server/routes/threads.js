@@ -48,8 +48,6 @@ router.patch('/:id', getThread, async (req, res) => {
         res.thread.title = req.body.title;
     if (req.body.desc != null)
         res.thread.desc = req.body.desc;
-    if (req.body.upvotes != null)
-        res.thread.upvotes = req.body.upvotes;
     try {
         const updatedThread = await res.thread.save();
         res.json(updatedThread);
