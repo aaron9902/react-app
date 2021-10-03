@@ -21,12 +21,18 @@ steps:
 - script: npm install
   displayName: 'All server package installed'
 
-- task: Npm@1
-  inputs:
-    command: 'install'
-    workingDir: '/client'
-
-- script: |
+- script: 
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+
+- task: Npm@1
+  inputs:
+    workingDir: '/client'
+
+- script: npm install
+  displayName: 'All client package installed'
+
+- script: npm test
+  displayName: 'Run a unit test for Login feature'
+
