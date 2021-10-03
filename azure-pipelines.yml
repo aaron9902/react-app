@@ -19,7 +19,12 @@ steps:
     versionSpec: $(node_version)
 
 - script: npm install
-  displayName: 'All package installed'
+  displayName: 'All server package installed'
+
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: '/client'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
