@@ -6,32 +6,65 @@
 trigger:
 - main
 
-pool:
-  vmImage: 'ubuntu-latest'
-strategy:
-  matrix:
-    node_16_x:
-      node_version: 16.6.1
+variables:
+  # Subscription needs a storage account and a website
+  # azureSubscription: 'YOUR_SUB'
 
-steps:
-- task: NodeTool@0 
-  inputs:
-    versionSpec: $(node_version)
+  # Needs to be a linux app service and there are a bunch of env variables that need to be set on it
+  # serverWebAppName: 'YOUR_SERVER_NAME'
 
-- script: npm install
-  displayName: 'All server package installed'
+  # This needs to have a static website setup with the default container ($web)
+  # clientBlobAccountName: 'YOUR_STORAGE_NAME'
 
-- script: 
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  # This is provided to the client app so it knows how to hit the right server
+  # serverUrl: 'YOUR_SERVER_URL'
 
-- script: cd /client
-  displayName: 'change working directory to client'
+  # We build on linux to remove any dependancies on windows stuff / can move to GCP or AWS
+  vmImageName: 'ubuntu-latest'
 
-- script: npm install
-  displayName: 'All client package installed'
+stages:
+  - stage: Build
+    displayName: Build stage
+    jobs:
+      - job: Build
+        displayName: Build
+        pool:
+          vmImage: $(vmImageName)
 
-- script: npm test
-  displayName: 'Run a unit test for Login feature'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '10.x'
+            displayName: 'Install Node.js'
 
+          - script: |
+              cd server
+              yarn install
+              npm run build --if-present
+              npm run test --if-present
+              cd ../client
+              yarn install
+              npm run build --if-present
+              npm run test --if-present
+            displayName: 'npm install, build and test'
+#            env:
+#              CI: true
+#              REACT_APP_GRAPHQL_URL: '$(serverUrl)'
+
+#          - task: PublishTestResults@2
+#            condition: succeededOrFailed()
+#            inputs:
+#              testRunner: JUnit
+#              testResultsFiles: '$(System.DefaultWorkingDirectory)/server/junit.xml'
+#            displayName: 'Publish test results'
+
+  - stage: Deploy
+    displayName: Deploy stage
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - deployment: Deploy
+        displayName: Deploy Production
+        environment: 'production'
+        pool:
+          vmImage: $(vmImageName)
