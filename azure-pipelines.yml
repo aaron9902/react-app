@@ -26,9 +26,8 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-- task: Npm@1
-  inputs:
-    workingDir: '/client'
+- script: cd /client
+  displayName: 'change working directory to client'
 
 - script: npm install
   displayName: 'All client package installed'
