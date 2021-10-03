@@ -39,7 +39,7 @@ stages:
 
           - script: |
               yarn install
-              cd /client
+              cd client/
               yarn install
               npm test
             displayName: 'npm install, build and test'
