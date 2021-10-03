@@ -47,12 +47,6 @@ stages:
 #              CI: true
 #              REACT_APP_GRAPHQL_URL: '$(serverUrl)'
 
-#          - task: PublishTestResults@2
-#            condition: succeededOrFailed()
-#            inputs:
-#              testRunner: JUnit
-#              testResultsFiles: '$(System.DefaultWorkingDirectory)/server/junit.xml'
-#            displayName: 'Publish test results'
 
   - stage: Deploy
     displayName: Deploy stage
