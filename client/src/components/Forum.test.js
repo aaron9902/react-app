@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Forums from '../src/components/forums';
+import Forums from './forums';
 import { BrowserRouter, BrowserRouter as Router, Link } from "react-router-dom"; 
 
 describe('<Forums/ >', () => {
