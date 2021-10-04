@@ -22,18 +22,20 @@ function Forums() {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>Forums</h1>
-      <input
-        type="text"
-        placeholder="Search forum name"
-        value={searchName}
-        onChange={e => setSearchName(e.target.value)} //constantly updates searchName to whatever is being tpyed in
-      />
-      <button type="button" onClick={find}>Search</button>
-      <ul>
+      <div className="flex">
+        <input
+          type="text"
+          placeholder="Search forum name"
+          value={searchName}
+          onChange={e => setSearchName(e.target.value)} //constantly updates searchName to whatever is being tpyed in
+        />
+        <button className="search-bar btn-primary" type="button" onClick={find}>Search</button>
+      </div>
+      <ul className="grid-4">
         {forumData.map(forum => ( //loops through forumData. for each forum, display it as link and show its title/desc
-          <li key={forum._id}>
+          <li className='card' key={forum._id}>
             <Link to={"/forums/" + forum._id}>
               <h2>{forum.title}</h2>
               <p>{forum.desc}</p>

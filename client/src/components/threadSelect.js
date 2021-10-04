@@ -20,14 +20,14 @@ function ThreadSelect() {
 
   return (
     threadData == "" ? null : ( //wait for threadData to be fetched
-      <div>
+      <div className="container">
         <Link to={'/forums/' + threadData.forumParent._id}>
           <h1>{threadData.forumParent.title}</h1>
         </Link>
         <h2>{threadData.title}</h2>
         <p style={{ whiteSpace: 'pre-line' }}>{threadData.desc}</p>
         <p>Posted at {moment(threadData.date).format('MMM Do YYYY')}
-          , by <Link to={'/profile/' + threadData.userParent._id}> {threadData.userParent.name}</Link>
+          , by <span className="link"><Link to={'/profile/' + threadData.userParent._id}> {threadData.userParent.name}</Link></span>
         </p>
         <div>
           <textarea
@@ -37,7 +37,7 @@ function ThreadSelect() {
             style={{ width: "500px" }}
           />
           <br />
-          <button>Comment</button>
+          <button className="btn">Comment</button>
         </div>
         <p>Comments go here</p>
       </div>

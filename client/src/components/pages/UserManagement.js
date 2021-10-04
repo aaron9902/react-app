@@ -6,7 +6,7 @@ import UserForm from '../usermanagement/UserForm';
 
 const UserManagement = () => {
     return (
-        <div className="grid-2">
+        <div className="container grid-2" style={{marginTop:20}}>
             <div>
                 <UserForm />
             </div>

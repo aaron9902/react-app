@@ -21,22 +21,17 @@ function RightMenu(props) {
 
   if (user.userData && !user.userData.isAuth) {
     return (
-      <Menu mode={props.mode}>
-        <Menu.Item>
-          <a href="/login">Signin</a>
-        </Menu.Item>
-        <Menu.Item>
-          <a href="/register">Signup</a>
-        </Menu.Item>
-      </Menu>
+      <div className="navbar">
+        <a href="/login">Signin</a>
+        <a href="/register">Signup</a>
+      </div>
     )
   } else {
     return (
-      <Menu mode={props.mode}>
-        <Menu.Item>
-          <a onClick={logoutHandler}>Logout</a>
-        </Menu.Item>
-      </Menu>
+      <div className="navbar">
+        <a onClick={logoutHandler}>Logout</a>
+      </div>
+
     )
   }
 }

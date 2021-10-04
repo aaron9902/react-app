@@ -47,7 +47,7 @@ function RegisterPage(props) {
         
     }
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' ,height: '100vh'}}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' ,height: '79vh'}}>
             
 
             <form style={{display: 'flex', flexDirection: 'column'}}
@@ -61,9 +61,7 @@ function RegisterPage(props) {
                 <input type="password" value={Password} onChange={onPasswordHandler} />
                 <label>Confirm Password</label>
                 <input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} />
-
-                <br/>
-                <button> Register </button>
+                <button className="btn-primary"> Register </button>
             </form>
         </div>
     )

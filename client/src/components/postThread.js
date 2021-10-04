@@ -35,7 +35,7 @@ function PostThread() {
 
   return (
     forumData == "" ? null : ( //waits for forumData to be fetched before rendering the page (static elements were rendered immediately)
-      <div>
+      <div className="container">
         <h1>{forumData.title}</h1>
         <p>{forumData.desc}</p>
         <div>
@@ -46,9 +46,7 @@ function PostThread() {
               value={threadTitle}
               onChange={e => setThreadTitle(e.target.value)}
               required
-              style={{ width: "500px" }}
             />
-            <br /><br />
             <textarea
               placeholder="Description"
               value={threadDesc}
@@ -56,13 +54,13 @@ function PostThread() {
               required
               rows={10}
               maxLength="300"
-              style={{ width: "500px" }}
             />
-            <br />
-            <button type="submit">Post</button>
-            <Link to={'/forums/' + id}>
-              <button>Cancel</button>
-            </Link>
+            <div className="vertical-center" style={{ marginTop: 15 }}>
+              <button className="btn" type="submit">Post</button>
+              <Link to={'/forums/' + id}>
+                <button className="btn" style={{ marginLeft: '10px' }}>Cancel</button>
+              </Link>
+            </div>
           </form>
         </div>
       </div>

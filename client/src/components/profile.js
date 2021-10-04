@@ -54,47 +54,53 @@ function Profile() {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>{userData.name}'s profile</h1>
       <h2>Posts</h2>
       {usersThreads.length == 0 ? <p>No posts yet :(</p> : (
         <div>
           <ul>
             {usersThreads.map(thread => (
-              <li key={thread._id}>
+              <li className="card" key={thread._id}>
                 <Link to={"/forums/" + id + '/thread/' + thread._id}>
                   <h3>{thread.title}</h3>
                 </Link>
-                <p>Posted at {moment(thread.date).format('MMM Do YYYY')}, in
-                  <Link to={'/forums/' + thread.forumParent._id}> {thread.forumParent.title}</Link>
+                <p>Posted at {moment(thread.date).format('MMM Do YYYY')}
+                  , in <span className='link'><Link to={'/forums/' + thread.forumParent._id}>{thread.forumParent.title}</Link></span>
                 </p>
                 {auth == true ? ( //display editing/deleting options if user is authenticated
                   <div>
-                    <Popup trigger={<button>Edit</button>} modal>
-                      <input
-                        type="text"
-                        placeholder="Title"
-                        defaultValue={thread.title}
-                        onChange={e => setThreadTitle(e.target.value)}
-                        required
-                        style={{ width: "100%" }}
-                      />
-                      <br /><br />
-                      <textarea
-                        placeholder="Description"
-                        defaultValue={thread.desc}
-                        onChange={e => setThreadDesc(e.target.value)}
-                        required
-                        rows={10}
-                        maxLength="300"
-                        style={{ width: "100%", whiteSpace: "pre-line" }}
-                      />
-                      <br />
-                      <button onClick={() => { edit(thread._id, thread.title, thread.desc) }}>Edit</button>
+                    <Popup trigger={<button className='top-right2 btn'>Edit</button>} modal>
+                      <div className="container">
+                        <br />
+                        <label>Title</label>
+                        <input
+                          type="text"
+                          placeholder="Title"
+                          defaultValue={thread.title}
+                          onChange={e => setThreadTitle(e.target.value)}
+                          required
+                          style={{ marginTop: 0, width: "100%" }}
+                        />
+                        <label>Description</label>
+                        <textarea
+                          placeholder="Description"
+                          defaultValue={thread.desc}
+                          onChange={e => setThreadDesc(e.target.value)}
+                          required
+                          rows={8}
+                          maxLength="300"
+                          style={{ width: "100%", whiteSpace: "pre-line" }}
+                        />
+                        <button className=" vertical-center btn" style={{ marginTop: 10 }} onClick={() => { edit(thread._id, thread.title, thread.desc) }}>Edit</button>
+                      </div>
                     </Popup>
-                    <Popup trigger={<button>Delete</button>} modal>
-                      <p>Are you sure you want to delete this thread? This can not be undone.</p>
-                      <button onClick={() => { deleteThread(thread._id) }}>Delete</button>
+                    <Popup trigger={<button className='top-right btn'>Delete</button>} modal>
+                      <div className="container">
+                        <br/>
+                        <p style={{ textAlign: 'center' }}>Are you sure you want to delete this thread? This can not be undone.</p>
+                        <button className='vertical-center btn' onClick={() => { deleteThread(thread._id) }}>Delete</button>
+                      </div>
                     </Popup>
                   </div>
                 ) : null}
