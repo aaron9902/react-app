@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { BrowserRouter as Router, Link, useParams } from "react-router-dom";
 import axios from 'axios';
 
@@ -12,8 +12,6 @@ function PostThread() {
   const [forumData, setForumData] = useState("");
   const [threadTitle, setThreadTitle] = useState("");
   const [threadDesc, setThreadDesc] = useState("");
-
-  const [posted, setPosted] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
