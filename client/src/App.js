@@ -5,7 +5,7 @@ import Auth from './hoc/auth'
 import LandingPage from './components/LandingPage';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
-import UserssState from './context/users/UserState';
+import UserState from './context/users/UserState';
 import UserManagement from './components/pages/UserManagement';
 import NavBar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer";
@@ -22,7 +22,7 @@ import './App.css';
 //false   =>  logged in users CANNOT access this page (register and login page)
 function App() {
   return (
-    <UserssState>
+    <UserState>
     <Suspense fallback={(<div>Loading...</div>)}>
       <NavBar />
       <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
@@ -46,7 +46,7 @@ function App() {
       </div>
       <Footer />
     </Suspense>
-    </UserssState>
+    </UserState>
   );
 }
 
