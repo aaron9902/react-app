@@ -53,9 +53,9 @@ const UserssForm = () => {
     return (
         <form onSubmit={onSubmit}>
             <h2 className="text-primary">{current ? 'Edit User' : 'Add a User'} </h2>
-            <input type="text" placeholder="name" name="name" value={name} onChange={onChange} />
-            <input type="email" placeholder="email" name="email" value={email} onChange={onChange} />
-            <input type="password" placeholder="password" name="password" defaultValue='' onChange={onChange} />
+            <input type="text" placeholder="name" name="name" value={name} onChange={onChange} required />
+            <input type="email" placeholder="email" name="email" value={email} onChange={onChange} required />
+            <input type="password" placeholder="password" name="password" defaultValue='' onChange={onChange} required />
             <h5>User Role</h5>
             {/* <input type="radio" name="type" value="user" checked={true} /> User{' '} */}
             <input type="radio" name="type" value="staff" /> Staff
