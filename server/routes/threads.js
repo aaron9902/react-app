@@ -22,7 +22,7 @@ router.get('/:id/:name', async (req, res) => {
     const threads = await Thread.find({ 
         forumParent: (req.params.id),
         title: { $regex: (req.params.name), $options: 'i' } 
-    });
+    }).populate('userParent');
     res.json(threads);
 });
 
