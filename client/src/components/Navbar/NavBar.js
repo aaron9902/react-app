@@ -15,9 +15,6 @@ function NavBar() {
         <div className="menu_left">
           <LeftMenu mode="horizontal" />
         </div>
-        <div>
-          <Link to='/usermanagement'>User Management</Link>
-        </div>
         <div className="menu_rigth">
           <RightMenu mode="horizontal" />
         </div>

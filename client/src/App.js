@@ -41,7 +41,7 @@ function App() {
 
           <Route exact path="/profile/:id" component={Auth(Profile, null)} />
 
-          <Route exact path='/usermanagement' component={UserManagement} />
+          <Route exact path='/usermanagement' component={Auth(UserManagement, true)} />
         </Switch>
       </div>
       <Footer />

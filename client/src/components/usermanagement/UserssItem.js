@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import UserssContext from '../../context/users/userssContext';
 import PropTypes from 'prop-types'
+import axios from 'axios';
 
 
 
@@ -8,26 +9,23 @@ const UserssItem = ({ userss }) => {
     const userssContext = useContext(UserssContext);
     const { deleteUserss, setCurrent, clearCurrent } = userssContext;
 
-    const { id, name, email, password } = userss;
+    const { _id, name, email } = userss;
 
     const onDelete = () => {
-        deleteUserss(id); 
-        clearCurrent();          
+        axios.delete('/api/users/delete/' + _id).then((res) => {
+            window.location.reload();
+        });
     }
 
     return (
         <div className='card bg-light'>
             <h3 className="text-left">
-                {name}{' '} 
+                {name}{' '}
             </h3>
             <ul className="list">
                 {email && (<li>
-                     {email}
-                    </li>
-                )}
-                {password && (<li>
-                     {password}
-                    </li>
+                    {email}
+                </li>
                 )}
             </ul>
             <p>

@@ -15,6 +15,11 @@ function LeftMenu(props) {
           <a href={"/profile/" + user.userData._id}>Profile</a>
         </Menu.Item>
       ) : null}
+      {user.userData && user.userData.isAuth && user.userData.role == 1 ? (
+        <Menu.Item>
+          <a href={"/usermanagement"}>User Management</a>
+        </Menu.Item>
+      ) : null}
     </Menu>
   )
 }
