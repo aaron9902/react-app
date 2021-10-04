@@ -54,22 +54,23 @@ function Profile() {
   }
 
   return (
-    usersThreads.length == 0 ? null : (
-      <div>
-        <h1>{userData.name}'s profile</h1>
-        <h2>Posts</h2>
-        <ul>
-          {usersThreads.map(thread => (
-            <li key={thread._id}>
-              <Link to={"/forums/" + id + '/thread/' + thread._id}>
-                <h3>{thread.title}</h3>
-              </Link>
-              <p>Posted at {moment(thread.date).format('MMM Do YYYY')}, in
-                <Link to={'/forums/' + thread.forumParent._id}> {thread.forumParent.title}</Link>
-              </p>
-              {auth == true ? ( //display editing/deleting options if user is authenticated
-                <div>
-                  <Popup trigger={<button>Edit</button>} modal>
+    <div>
+      <h1>{userData.name}'s profile</h1>
+      <h2>Posts</h2>
+      {usersThreads.length == 0 ? <p>No posts yet :(</p> : (
+        <div>
+          <ul>
+            {usersThreads.map(thread => (
+              <li key={thread._id}>
+                <Link to={"/forums/" + id + '/thread/' + thread._id}>
+                  <h3>{thread.title}</h3>
+                </Link>
+                <p>Posted at {moment(thread.date).format('MMM Do YYYY')}, in
+                  <Link to={'/forums/' + thread.forumParent._id}> {thread.forumParent.title}</Link>
+                </p>
+                {auth == true ? ( //display editing/deleting options if user is authenticated
+                  <div>
+                    <Popup trigger={<button>Edit</button>} modal>
                       <input
                         type="text"
                         placeholder="Title"
@@ -90,18 +91,19 @@ function Profile() {
                       />
                       <br />
                       <button onClick={() => { edit(thread._id, thread.title, thread.desc) }}>Edit</button>
-                  </Popup>
-                  <Popup trigger={<button>Delete</button>} modal>
-                    <p>Are you sure you want to delete this thread? This can not be undone.</p>
-                    <button onClick={() => { deleteThread(thread._id) }}>Delete</button>
-                  </Popup>
-                </div>
-              ) : null}
-            </li>
-          ))}
-        </ul>
-      </div>
-    )
+                    </Popup>
+                    <Popup trigger={<button>Delete</button>} modal>
+                      <p>Are you sure you want to delete this thread? This can not be undone.</p>
+                      <button onClick={() => { deleteThread(thread._id) }}>Delete</button>
+                    </Popup>
+                  </div>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
   )
 }
 
