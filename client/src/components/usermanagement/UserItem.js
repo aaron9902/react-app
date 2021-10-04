@@ -12,8 +12,11 @@ const UserItem = ({ user }) => {
     const { _id, name, email, role } = user;
 
     const onDelete = () => {
-        axios.delete('/api/users/delete/' + _id).then((res) => {
-            window.location.reload();
+        axios.delete('/api/threads/parent/' + _id).then((res) => {
+            console.log("User's threads deleted")
+            axios.delete('/api/users/delete/' + _id).then((res) => {
+                window.location.reload();
+            });
         });
     }
 

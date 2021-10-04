@@ -66,6 +66,16 @@ router.delete('/:id', getThread, async (req, res) => {
     }
 });
 
+// Delete all threads by userParent ID
+router.delete('/parent/:id', async (req, res) => {
+    try {
+        await Thread.remove({ userParent: (req.params.id) })
+        res.json({message: 'Threads deleted' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 // Helper function that checks if a thread exists
 async function getThread(req, res, next) {
     let thread;
