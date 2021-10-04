@@ -40,7 +40,7 @@ stages:
           - script: |
               yarn install
               cd client/
-              yarn install
+              npm install
               CI:true npm test
             displayName: 'npm install, build and test'
 #            env:
