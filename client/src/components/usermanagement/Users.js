@@ -1,9 +1,9 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react'
-import UserssItem from './UserssItem';
-import UserssContext from '../../context/users/userssContext';
+import UserItem from './UserItem';
+import UserContext from '../../context/users/userContext';
 import axios from 'axios';
 
-const Usersss = () => {
+const Users = () => {
     const [users, setUsers] = useState([]); 
 
     useEffect(() => {
@@ -14,15 +14,13 @@ const Usersss = () => {
         return () => { isMounted = false };
     }, []);
 
-    const { usersss } = users;
-
     return (
         <Fragment>
-            {users.map(userss => (
-                <UserssItem key={userss._id} userss={userss} />
+            {users.map(user => (
+                <UserItem key={user._id} user={user} />
             ))}
         </Fragment>
     )
 }
 
-export default Usersss;
+export default Users;

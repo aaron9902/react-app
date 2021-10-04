@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
-import UserssContext from '../../context/users/userssContext';
+import UserContext from '../../context/users/userContext';
 import PropTypes from 'prop-types'
 import axios from 'axios';
 
 
 
-const UserssItem = ({ userss }) => {
-    const userssContext = useContext(UserssContext);
-    const { deleteUserss, setCurrent, clearCurrent } = userssContext;
+const UserItem = ({ user }) => {
+    const userContext = useContext(UserContext);
+    const { deleteUser, setCurrent, clearCurrent } = userContext;
 
-    const { _id, name, email } = userss;
+    const { _id, name, email, role } = user;
 
     const onDelete = () => {
         axios.delete('/api/users/delete/' + _id).then((res) => {
@@ -21,6 +21,8 @@ const UserssItem = ({ userss }) => {
         <div className='card bg-light'>
             <h3 className="text-left">
                 {name}{' '}
+                <span style = {{ float: 'right' }}
+                 className={'badge ' + (role === 0 ? 'badge-success' : 'badge-primary')}>{(role === 0 ? 'User' : 'Admin')}</span>
             </h3>
             <ul className="list">
                 {email && (<li>
@@ -29,15 +31,15 @@ const UserssItem = ({ userss }) => {
                 )}
             </ul>
             <p>
-                <button className="btn btn-dark btn-sm" onClick={() => setCurrent(userss)}>Edit</button>
+                <button className="btn btn-dark btn-sm" onClick={() => setCurrent(user)}>Edit</button>
                 <button className="btn btn-danger btn-sm" onClick={onDelete}>Delete</button>
             </p>
         </div>
     );
 };
 
-UserssItem.propTypes = {
-    userss: PropTypes.object.isRequired
+UserItem.propTypes = {
+    user: PropTypes.object.isRequired
 }
 
-export default UserssItem
+export default UserItem

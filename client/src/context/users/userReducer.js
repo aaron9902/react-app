@@ -1,29 +1,29 @@
 import {
-    ADD_USERSS,
-    DELETE_USERSS,
+    ADD_USER,
+    DELETE_USER,
     SET_CURRENT,
     CLEAR_CURRENT,
-    UPDATE_USERSS,
-    FILTER_USERSSS,
+    UPDATE_USER,
+    FILTER_USERS,
     CLEAR_FILTER
 } from '../types';
 
 const variable = (state, action) => {
     switch(action.type) {
-        case ADD_USERSS:
+        case ADD_USER:
             return {
                 ...state,
-                usersss: [...state.usersss, action.payload]
+                users: [...state.users, action.payload]
             }
-        case UPDATE_USERSS:
+        case UPDATE_USER:
             return {
                 ...state,
-                usersss: state.usersss.map(userss => userss.id === action.payload.id ? action.payload : userss)
+                users: state.users.map(user => user.id === action.payload.id ? action.payload : user)
             }
-        case DELETE_USERSS:
+        case DELETE_USER:
             return {
                 ...state,
-                usersss: state.usersss.filter(userss => userss.id !== action.payload)
+                users: state.users.filter(user => user.id !== action.payload)
             }
         case SET_CURRENT:
             return {
@@ -35,24 +35,19 @@ const variable = (state, action) => {
                 ...state,
                 current: null
             }
-        case FILTER_USERSSS:
+        case FILTER_USERS:
             return {
                 ...state,
-                filtered: state.usersss.filter(userss => {
+                filtered: state.users.filter(user => {
                     const regex = new RegExp(`${action.payload}`, 'gi');
-                    return userss.name.match(regex);
+                    return user.name.match(regex);
                 })
             }
         case CLEAR_FILTER:
             return {
                 ...state,
                 filtered: null
-            }
-        // case CONTACT_ERROR:
-        //     return {
-        //         ...state,
-        //         error: action.payload
-        //     }  
+            } 
         default:
             return state;
     }

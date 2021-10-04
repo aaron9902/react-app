@@ -1,11 +1,11 @@
-export const GET_USERSS = 'GET_USERSS';
-export const ADD_USERSS = 'ADD_USERSS';
-export const DELETE_USERSS = 'DELETE_USERSS';
+export const GET_USER = 'GET_USER';
+export const ADD_USER = 'ADD_USER';
+export const DELETE_USER = 'DELETE_USER';
 export const SET_CURRENT = 'SET_CURRENT';
 export const CLEAR_CURRENT = 'CLEAR_CURRENT';
-export const UPDATE_USERSS = 'UPDATE_USERSS';
-export const USERSS_ERROR = 'USERSS_ERROR';
-export const FILTER_USERSSS = 'FILTER_USERSSS';
+export const UPDATE_USER = 'UPDATE_USER';
+export const USER_ERROR = 'USER_ERROR';
+export const FILTER_USERS = 'FILTER_USERS';
 export const CLEAR_FILTER = 'CLEAR_FILTER';
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';

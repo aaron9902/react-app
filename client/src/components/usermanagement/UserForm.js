@@ -1,44 +1,48 @@
 import React, { useState, useContext, useEffect } from 'react'
-import UserssContext from '../../context/users/userssContext';
+import UserContext from '../../context/users/userContext';
 import axios from 'axios';
 
-const UserssForm = () => {
-    const userssContext = useContext(UserssContext);
+const UserForm = () => {
+    const userContext = useContext(UserContext);
 
-    const { addUserss, updateUserss, clearCurrent, current } = userssContext;
+    const { addUser, updateUser, clearCurrent, current } = userContext;
 
     useEffect(() => {
         if (current !== null) {
-            setUserss(current);
+            setUser(current);
         } else {
-            setUserss({
+            setUser({
                 name: '',
                 email: '',
-                password: ''
+                password: '',
+                role: '0'
             });
         }
         console.log(current);
-    }, [userssContext, current]);
+    }, [userContext, current]);
 
-    const [userss, setUserss] = useState({
+    const [user, setUser] = useState({
         name: '',
         email: '',
-        password: ''
+        password: '',
+        role: '0'
     });
 
-    const { _id, name, email, password } = userss;
+    const { _id, name, email, password } = user;
 
-    const onChange = e => setUserss({ ...userss, [e.target.name]: e.target.value });
+    const role = user.role.toString();
+
+    const onChange = e => setUser({ ...user, [e.target.name]: e.target.value});
 
     const onSubmit = e => {
         e.preventDefault();
         if (current === null) {
-            axios.post('/api/users/register', userss).then((res) => {
+            axios.post('/api/users/register', user).then((res) => {
                 console.log(res);
                 window.location.reload();
             });
         } else {
-            axios.patch('/api/users/' + _id, userss).then((res) => {
+            axios.patch('/api/users/' + _id, user).then((res) => {
                 console.log(res);
                 window.location.reload();
             });
@@ -55,10 +59,10 @@ const UserssForm = () => {
             <h2 className="text-primary">{current ? 'Edit User' : 'Add a User'} </h2>
             <input type="text" placeholder="name" name="name" value={name} onChange={onChange} required />
             <input type="email" placeholder="email" name="email" value={email} onChange={onChange} required />
-            <input type="password" placeholder="password" name="password" defaultValue='' onChange={onChange} required />
-            <h5>User Role</h5>
-            {/* <input type="radio" name="type" value="user" checked={true} /> User{' '} */}
-            <input type="radio" name="type" value="staff" /> Staff
+            <input type="password" placeholder="password" name="password" defaultValue='' onChange={onChange} required={!current} />
+            <h4>User Role</h4>
+            <input type="radio" name="role" value="0" checked={ role ==="0" } onChange={onChange} /> User{' '}
+            <input type="radio" name="role" value="1" checked={ role ==="1" } onChange={onChange} /> Staff{' '}
             <div>
                 <input type="submit" value={current ? 'Update User Details' : 'Add a User'} className="btn btn-primary btn-block" />
             </div>
@@ -69,4 +73,4 @@ const UserssForm = () => {
     )
 }
 
-export default UserssForm;
+export default UserForm;

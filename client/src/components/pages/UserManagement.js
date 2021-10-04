@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import Usersss from '../usermanagement/Usersss';
-import UserssForm from '../usermanagement/UserssForm';
+import Users from '../usermanagement/Users';
+import UserForm from '../usermanagement/UserForm';
 
 
 
@@ -8,10 +8,10 @@ const UserManagement = () => {
     return (
         <div className="grid-2">
             <div>
-                <UserssForm />
+                <UserForm />
             </div>
             <div>
-                <Usersss />
+                <Users />
             </div>
         </div>
     )

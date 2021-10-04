@@ -5,7 +5,7 @@ import Auth from './hoc/auth'
 import LandingPage from './components/LandingPage';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
-import UserssState from './context/users/UserssState';
+import UserssState from './context/users/UserState';
 import UserManagement from './components/pages/UserManagement';
 import NavBar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer";
