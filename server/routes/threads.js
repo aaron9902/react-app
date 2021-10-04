@@ -22,7 +22,7 @@ router.get('/:id/:name', async (req, res) => {
     const threads = await Thread.find({ 
         forumParent: (req.params.id),
         title: { $regex: (req.params.name), $options: 'i' } 
-    });
+    }).populate('userParent');
     res.json(threads);
 });
 
@@ -48,8 +48,6 @@ router.patch('/:id', getThread, async (req, res) => {
         res.thread.title = req.body.title;
     if (req.body.desc != null)
         res.thread.desc = req.body.desc;
-    if (req.body.upvotes != null)
-        res.thread.upvotes = req.body.upvotes;
     try {
         const updatedThread = await res.thread.save();
         res.json(updatedThread);

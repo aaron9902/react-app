@@ -45,7 +45,8 @@ function ForumSelect() {
         />
         <button type="button" onClick={find}>Search</button>
         <ul>
-          {threadData.map(thread => ( //need to somehow display thread author's username instead of id
+          {threadData.length == 0 ? <p>No posts yet. Be the first!</p> : null}
+          {threadData.map(thread => ( 
             <li key={thread._id}>
               <Link to={"/forums/" + id + '/thread/' + thread._id}>
                 <h3>{thread.title}</h3>
