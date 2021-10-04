@@ -12,6 +12,9 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); //remove since its deprecated?
 
+// Init Middleware
+app.use(express.json({ extended: false }));
+
 const mongoose = require('mongoose')
 mongoose.connect(config.mongoURI, {
   useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
@@ -21,6 +24,8 @@ mongoose.connect(config.mongoURI, {
 app.use('/api/users', require('./routes/users'));
 app.use('/api/forums', require('./routes/forums'));
 app.use('/api/threads', require('./routes/threads'));
+app.use('/api/userss', require('./routes/userss'));
+app.use('api/auth', require('./routes/auth'));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

@@ -5,6 +5,8 @@ import Auth from './hoc/auth'
 import LandingPage from './components/LandingPage';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
+import UserssState from './context/users/UserssState';
+import UserManagement from './components/pages/UserManagement';
 import NavBar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer";
 import Forums from './components/forums'
@@ -12,6 +14,7 @@ import ForumSelect from './components/forumSelect'
 import ThreadSelect from './components/threadSelect'
 import PostThread from './components/postThread'
 import Profile from './components/profile'
+import './App.css';
 
 //Route Options
 //null    =>  everyone can access this page (landing page and About page)
@@ -19,6 +22,7 @@ import Profile from './components/profile'
 //false   =>  logged in users CANNOT access this page (register and login page)
 function App() {
   return (
+    <UserssState>
     <Suspense fallback={(<div>Loading...</div>)}>
       <NavBar />
       <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
@@ -36,10 +40,13 @@ function App() {
           <Route exact path="/forums/:id/post" component={Auth(PostThread, true)} />
 
           <Route exact path="/profile/:id" component={Auth(Profile, null)} />
+
+          <Route exact path='/usermanagement' component={UserManagement} />
         </Switch>
       </div>
       <Footer />
     </Suspense>
+    </UserssState>
   );
 }
 
