@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const UserItem = ({ user }) => {
     const userContext = useContext(UserContext);
-    const { deleteUser, setCurrent, clearCurrent } = userContext;
+    const { setCurrent } = userContext;
 
     const { _id, name, email, role } = user;
 

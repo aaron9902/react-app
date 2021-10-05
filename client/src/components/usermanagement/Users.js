@@ -1,6 +1,5 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import UserItem from './UserItem';
-import UserContext from '../../context/users/userContext';
 import axios from 'axios';
 
 const Users = () => {

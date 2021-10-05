@@ -5,7 +5,7 @@ import axios from 'axios';
 const UserForm = () => {
     const userContext = useContext(UserContext);
 
-    const { addUser, updateUser, clearCurrent, current } = userContext;
+    const { clearCurrent, current } = userContext;
 
     useEffect(() => {
         if (current !== null) {
@@ -28,7 +28,7 @@ const UserForm = () => {
         role: '0'
     });
 
-    const { _id, name, email, password } = user;
+    const { _id, name, email } = user;
 
     const role = user.role.toString();
 

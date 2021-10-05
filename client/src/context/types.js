@@ -1,9 +1,6 @@
-export const GET_USER = 'GET_USER';
-export const ADD_USER = 'ADD_USER';
-export const DELETE_USER = 'DELETE_USER';
+
 export const SET_CURRENT = 'SET_CURRENT';
 export const CLEAR_CURRENT = 'CLEAR_CURRENT';
-export const UPDATE_USER = 'UPDATE_USER';
 export const USER_ERROR = 'USER_ERROR';
 export const FILTER_USERS = 'FILTER_USERS';
 export const CLEAR_FILTER = 'CLEAR_FILTER';
