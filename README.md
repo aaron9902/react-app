@@ -14,3 +14,20 @@ To test this project on your local machine,
 
 5. access - http://localhost:3000/ on your browser.
     
+# directory structure
+
+The application has two main folders: client (front end), server (back end)
+
+## client/src
+
+/components - html page render components, e.g. Forum page, Profile page
+
+/App.js - front end initialization file
+
+## server
+
+/models - JSON collections to model objects, e.g. User, Forum, Thread
+
+/routes - back end routes that perform certain actions when requested
+
+/index.js - back end server file
