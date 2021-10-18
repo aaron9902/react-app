@@ -85,6 +85,15 @@ img {
   margin: 0.7rem 0;
 }
 
+/* List */
+.list {
+  margin: 0.5rem 0;
+}
+
+.list li {
+  padding-bottom: 0.3rem;
+}
+
 /* Grid */
 .grid-2 {
   display: grid;
@@ -120,6 +129,12 @@ img {
 .btn-block {
   display: block;
   width: 100%;
+}
+
+.btn-sm {
+  font-size: 0.8rem;
+  padding: 0.3rem 1rem;
+  margin-right: 0.2rem;
 }
 
 .badge {
@@ -278,6 +293,6 @@ table th {
   margin: 0 2rem;
 }
 
-.navbar a:hover {
+ .navbar a:hover {
   color: var(--light-color);
-}
+} 
