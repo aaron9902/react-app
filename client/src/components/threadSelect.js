@@ -5,6 +5,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 function ThreadSelect() {
+  const [isError, setError] = useState(false);
   const { threadID } = useParams(); //getting threadID from url
   const [threadData, setThreadData] = useState("");
 
@@ -12,17 +13,22 @@ function ThreadSelect() {
     let isMounted = true;
     axios.get('/api/threads/' + threadID).then((res) => {
       if (isMounted) setThreadData(res.data);
-    });
+    })
+    .catch((error) => {
+      if (error) setError(true);
+    })
     return () => { isMounted = false };
   }, [])
 
-  console.log(threadData);
+  useEffect(()=> {
+    document.title = !threadData.title ? document.title : threadData.title + " : " + threadData.forumParent.title;
+  })
 
   return (
-    threadData == "" ? null : ( //wait for threadData to be fetched
+    isError ? <p>Thread not found</p> : threadData == "" ? null : //wait for threadData to be fetched
       <div className="container">
         <Link to={'/forums/' + threadData.forumParent._id}>
-          <h1>{threadData.forumParent.title}</h1>
+          <h1>{'\u2B05'} {threadData.forumParent.title}</h1>
         </Link>
         <h2>{threadData.title}</h2>
         <p style={{ whiteSpace: 'pre-line' }}>{threadData.desc}</p>
@@ -41,7 +47,6 @@ function ThreadSelect() {
         </div>
         <p>Comments go here</p>
       </div>
-    )
   );
 }
 

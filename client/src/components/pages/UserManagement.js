@@ -5,8 +5,13 @@ import UserForm from '../usermanagement/UserForm';
 
 
 const UserManagement = () => {
+
+    useEffect(() => {
+        document.title = "Admin user management";
+    })
+
     return (
-        <div className="container grid-2" style={{marginTop:20}}>
+        <div className="container grid-2" style={{ marginTop: 20 }}>
             <div>
                 <UserForm />
             </div>

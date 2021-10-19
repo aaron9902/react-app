@@ -5,6 +5,7 @@ import { loginUser } from '../_actions/user_action'
 import { withRouter } from 'react-router-dom'
 
 function LoginPage(props) {
+  const [incorrectLogin, setIncorrectLogin] = useState(false);
   const dispatch = useDispatch();
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
@@ -25,7 +26,7 @@ function LoginPage(props) {
         if (response.payload.loginSuccess) {
           props.history.push('/')
         } else {
-          alert('Error')
+          setIncorrectLogin(true);
         }
       })
   }
@@ -39,6 +40,12 @@ function LoginPage(props) {
         <label>Password</label>
         <input type="password" value={Password} onChange={onPasswordHandler} />
         <button className="btn-primary"> Login </button>
+        {incorrectLogin ? (
+          <div>
+            <br/>
+            <p style={{color:'red', textAlign:'center'}}>Incorrect email or password</p>
+          </div>
+        ) : null}
       </form>
     </div>
   )

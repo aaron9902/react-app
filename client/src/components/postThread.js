@@ -9,6 +9,8 @@ function PostThread() {
   const user = useSelector(state => state.user)
   const { id } = useParams();
 
+  const [isLoading, setLoading] = useState(true);
+  const [isError, setError] = useState(false);
   const [forumData, setForumData] = useState("");
   const [threadTitle, setThreadTitle] = useState("");
   const [threadDesc, setThreadDesc] = useState("");
@@ -17,9 +19,17 @@ function PostThread() {
     let isMounted = true;
     axios.get('/api/forums/' + id).then((res) => {
       if (isMounted) setForumData(res.data);
-    });
+      setLoading(false);
+    })
+    .catch((error) => {
+      setError(true);
+    })
     return () => { isMounted = false };
   }, []);
+
+  useEffect(()=> {
+    document.title = !forumData.title ? document.title : "Post in " + forumData.title;
+  })
 
   const post = () => {
     var data = {
@@ -34,7 +44,7 @@ function PostThread() {
   }
 
   return (
-    forumData == "" ? null : ( //waits for forumData to be fetched before rendering the page (static elements were rendered immediately)
+    isError ? <p>Thread not found</p> : user.userData && !user.userData.name || isLoading ? null : ( //waits for forumData to be fetched before rendering the page (static elements were rendered immediately)
       <div className="container">
         <h1>{forumData.title}</h1>
         <p>{forumData.desc}</p>

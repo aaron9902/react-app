@@ -42,6 +42,16 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.patch('/upvote/:id', getThread, async (req, res) => {
+    res.thread.upvotes += req.body.num;
+    try {
+        const updatedThread = await res.thread.save();
+        res.json(updatedThread);
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+})
+
 // Update thread by ID
 router.patch('/:id', getThread, async (req, res) => {
     if (req.body.title != null) 

@@ -23,7 +23,6 @@ import './App.css';
 function App() {
   return (
     <UserState>
-    <Suspense fallback={(<div>Loading...</div>)}>
       <NavBar />
       <div style={{ paddingTop: '69px', minHeight: 'calc(100vh - 80px)' }}>
         <Switch>
@@ -45,7 +44,6 @@ function App() {
         </Switch>
       </div>
       <Footer />
-    </Suspense>
     </UserState>
   );
 }
