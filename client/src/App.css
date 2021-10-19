@@ -178,7 +178,9 @@ img {
 }
 
 .upvote-btn:hover {
-  font-size-adjust: 10%;
+  transform: scale(1.2);
+  transform-origin: top;
+  user-select: none;
 }
 
 .thread-grid {
