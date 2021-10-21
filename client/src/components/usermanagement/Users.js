@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react';
 import UserItem from './UserItem';
 import axios from 'axios';
 

@@ -15,6 +15,7 @@ import ThreadSelect from './components/threadSelect'
 import PostThread from './components/postThread'
 import Profile from './components/profile'
 import './App.css';
+import ReportManagement from './components/pages/ReportManagement';
 
 //Route Options
 //null    =>  everyone can access this page (landing page and About page)
@@ -42,6 +43,7 @@ function App() {
           <Route exact path="/profile/:id" component={Auth(Profile, null)} />
 
           <Route exact path='/usermanagement' component={Auth(UserManagement, true)} />
+          <Route exact path='/reportmanagement' component={Auth(ReportManagement, true)} />
         </Switch>
       </div>
       <Footer />

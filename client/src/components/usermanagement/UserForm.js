@@ -62,7 +62,7 @@ const UserForm = () => {
             <input type="password" placeholder="password" name="password" defaultValue='' onChange={onChange} required={!current} />
             <h4>User Role</h4>
             <input type="radio" name="role" value="0" checked={ role ==="0" } onChange={onChange} /> User{' '}
-            <input type="radio" name="role" value="1" checked={ role ==="1" } onChange={onChange} /> Staff{' '}
+            <input type="radio" name="role" value="2" checked={ role ==="2" } onChange={onChange} /> Moderator{' '}
             <div>
                 <input type="submit" value={current ? 'Update User Details' : 'Add a User'} className="btn btn-primary btn-block" />
             </div>

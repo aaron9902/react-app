@@ -14,9 +14,13 @@ const UserItem = ({ user }) => {
     const onDelete = () => {
         axios.delete('/api/threads/parent/' + _id).then((res) => {
             console.log("User's threads deleted")
+            if (role === 1) {
+                alert('Cannot delete admin account');
+            } else {
             axios.delete('/api/users/delete/' + _id).then((res) => {
                 window.location.reload();
             });
+        }
         });
     }
 
@@ -24,8 +28,9 @@ const UserItem = ({ user }) => {
         <div className='card bg-light'>
             <h3 className="text-left">
                 {name}{' '}
-                <span style = {{ float: 'right' }}
-                 className={'badge ' + (role === 0 ? 'badge-success' : 'badge-primary')}>{(role === 0 ? 'User' : 'Admin')}</span>
+                {<span style = {{ float: 'right' }}
+                 className={'badge ' + (role === 0 ? 'badge-success' : role === 1 ? 'badge-danger' : 'badge-primary')}>{(role === 0 ? 'User' : role === 1 ? 'Admin' : 'Moderator')}</span>                
+                }
             </h3>
             <ul className="list">
                 {email && (<li>
