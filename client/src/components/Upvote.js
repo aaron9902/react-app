@@ -93,9 +93,9 @@ function Upvote(props) {
 
   return (
     <div className="upvote">
-      <a className="upvote-btn" onClick={() => { vote(1) }}><p>{'\u2B06'}</p></a>
+      <a className="upvote-btn" onClick={() => { vote(1) }}><p>{voteStatus != -1 && voteStatus == 1 ? '\uD83E\uDC45' : '\u21E7'}</p></a>
       <p>{votes}</p>
-      <a className="upvote-btn" onClick={() => { vote(-1) }}><p>{'\u2B07'}</p></a>
+      <a className="upvote-btn" onClick={() => { vote(-1) }}><p>{voteStatus != 1 && voteStatus == -1 ? '\uD83E\uDC47' : '\u21E9'}</p></a>
     </div>
   );
 }

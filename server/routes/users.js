@@ -34,9 +34,8 @@ router.patch('/:id', getUser, async (req, res) => {
   }
 });
 
-//insert/remove upvoted/downvoted thread ID,
+//insert/remove upvoted/downvoted thread ID (FOR SOME REASON HAVE TO KEEP DEBUG CODE)
 router.patch('/vote/:id', getUser, async (req, res) => {
-  console.log(req.body.newVoteStatus);
   switch (req.body.newVoteStatus) {
     case 0:
       if (req.body.num == -1) {
@@ -45,7 +44,7 @@ router.patch('/vote/:id', getUser, async (req, res) => {
           { $pull: { upvotes: req.body.threadID } },
           function (err, docs) {
             if (err) console.log(err)
-            else console.log("Removed Upvote")
+            else console.log("Removed upvote")
           }
         );
       } else if (req.body.num == 1) {
@@ -54,7 +53,7 @@ router.patch('/vote/:id', getUser, async (req, res) => {
           { $pull: { downvotes: req.body.threadID } },
           function (err, docs) {
             if (err) console.log(err)
-            else console.log("Updated user: ", docs)
+            else console.log("Removed downvote")
           }
         );
       }
@@ -66,7 +65,7 @@ router.patch('/vote/:id', getUser, async (req, res) => {
           { $pull: { downvotes: req.body.threadID } },
           function (err, docs) {
             if (err) console.log(err)
-            else console.log("Updated user: ", docs)
+            else console.log("Removed exisiting downvote")
           }
         );
       }
@@ -80,7 +79,7 @@ router.patch('/vote/:id', getUser, async (req, res) => {
           { $pull: { upvotes: req.body.threadID } },
           function (err, docs) {
             if (err) console.log(err)
-            else console.log("Updated user: ", docs)
+            else console.log("Removed exisiting upvote")
           }
         );
       }
