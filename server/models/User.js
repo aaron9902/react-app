@@ -19,6 +19,14 @@ const userSchema = mongoose.Schema({
         type: String,
         minLength: 5
     },
+    upvotes: [{
+        type: mongoose.Schema.Types.ObjectID,
+        ref: 'Thread'
+    }],
+    downvotes: [{
+        type: mongoose.Schema.Types.ObjectID,
+        ref: 'Thread'
+    }],
     role: {
         type: Number, // 0 for Normal Users, 1 for Admin
         default: 0
