@@ -46,7 +46,8 @@ stages:
           - task: PublishPipelineArtifact@0
             displayName: 'Publish server pipeline artifacts'
             inputs:
-              targetPath: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+              targetPath: $(System.DefaultWorkingDirectory)/bin/WebApp
+              artifactName: WebApp
 #            env:
 #              CI: true
 #              REACT_APP_GRAPHQL_URL: '$(serverUrl)'
