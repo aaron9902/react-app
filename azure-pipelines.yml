@@ -90,11 +90,13 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: DownloadPipelineArtifact@1
+                - task: DownloadBuildArtifacts@1
                   inputs:
                     buildType: 'current'
+                    downloadType: 'single'
                     artifactName: '$(Build.BuildId).zip'
-                    targetPath: '$(Pipeline.Workspace)'
+                    downloadPath: '$(System.ArtifactsDirectory)'
+
                 - task: ExtractFiles@1
                   inputs:
                     archiveFilePatterns: '**/*.zip'
