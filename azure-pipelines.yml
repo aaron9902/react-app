@@ -90,12 +90,8 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: DownloadPipelineArtifact@1
-                  displayName: 'Download Pipeline Artifacts'
-                  inputs:
-                    buildType: 'current'
                 - task: ExtractFiles@1
                   inputs:
-                    archiveFilePatterns: '$(Build.ArtifactStagingDirectory)/WebApp/$(Build.BuildId).zip'
+                    archiveFilePatterns: '**/*.zip'
                     destinationFolder: '$(System.DefaultWorkingDirectory)/unzip/$(Build.BuildId)'
                     cleanDestinationFolder: true
