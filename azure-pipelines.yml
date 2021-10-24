@@ -45,16 +45,35 @@ stages:
             displayName: 'npm install, build and test'
           - task: CopyFiles@2
             inputs:
-              Contents: '**'
-              TargetFolder: '$(Build.ArtifactStagingDirectory)'
+              SourceFolder: '$(System.DefaultWorkingDirectory)'
+              Contents: $(System.DefaultWorkingDirectory)/server/*.js
+                        $(System.DefaultWorkingDirectory)/package.json
+                        $(System.DefaultWorkingDirectory)/yarn.lock
+              TargetFolder: '$(Build.ArtifactStagingDirectory)/output'
               OverWrite: true
               ignoreMakeDirErrors: true
+            displayName: 'Copy SERVER files to artifact directory'
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: '$(System.DefaultWorkingDirectory)'
+              Contents: $(System.DefaultWorkingDirectory)/client/src/**/*
+                        $(System.DefaultWorkingDirectory)/client/package.json
+              TargetFolder: '$(Build.ArtifactStagingDirectory)/output'
+            displayName: 'Copy CLIENT files to artifact directory'
+          - task: ArchiveFiles@2
+            displayName: 'Archive files'
+            inputs:
+              rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/output'
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+              replaceExistingArchive: true
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
               ArtifactName: 'WebApp'
               publishLocation: 'Container'
-
+            displayName: 'Publish server pipeline artifacts'
 
 
   - stage: Deploy
@@ -67,3 +86,16 @@ stages:
         environment: 'production'
         pool:
           vmImage: $(vmImageName)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: DownloadPipelineArtifact@1
+                  displayName: 'Download Pipeline Artifacts'
+                  inputs:
+                    buildType: 'current'
+                - task: ExtractFiles@1
+                  inputs:
+                    archiveFilePatterns: '$(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip'
+                    destinationFolder: '$(System.DefaultWorkingDirectory)/unzip/$(Build.BuildId)'
+                    cleanDestinationFolder: true
