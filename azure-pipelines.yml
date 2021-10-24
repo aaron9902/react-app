@@ -96,6 +96,6 @@ stages:
                     buildType: 'current'
                 - task: ExtractFiles@1
                   inputs:
-                    archiveFilePatterns: '$(System.ArtifactsDirectory)/drop/$(Build.BuildId).zip'
+                    archiveFilePatterns: '$(System.ArtifactsDirectory)/$(Build.BuildId).zip'
                     destinationFolder: '$(System.DefaultWorkingDirectory)/unzip/$(Build.BuildId)'
                     cleanDestinationFolder: true
