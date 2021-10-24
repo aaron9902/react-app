@@ -49,7 +49,7 @@ stages:
               Contents: $(System.DefaultWorkingDirectory)/server/*.js
                         $(System.DefaultWorkingDirectory)/package.json
                         $(System.DefaultWorkingDirectory)/yarn.lock
-              TargetFolder: '$(Build.ArtifactStagingDirectory)/output'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
               OverWrite: true
               ignoreMakeDirErrors: true
             displayName: 'Copy SERVER files to artifact directory'
@@ -58,7 +58,7 @@ stages:
               SourceFolder: '$(System.DefaultWorkingDirectory)'
               Contents: $(System.DefaultWorkingDirectory)/client/src/**/*
                         $(System.DefaultWorkingDirectory)/client/package.json
-              TargetFolder: '$(Build.ArtifactStagingDirectory)/output'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
             displayName: 'Copy CLIENT files to artifact directory'
           - task: ArchiveFiles@2
             displayName: 'Archive files'
