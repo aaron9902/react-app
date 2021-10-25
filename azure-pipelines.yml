@@ -86,21 +86,3 @@ stages:
         environment: 'production'
         pool:
           vmImage: $(vmImageName)
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - task: DownloadBuildArtifacts@1
-                  inputs:
-                    buildType: 'current'
-                    downloadType: 'single'
-                    artifactName: '$(Build.BuildId).zip'
-                    downloadPath: '$(System.ArtifactsDirectory)'
-
-                - task: ExtractFiles@1
-                  inputs:
-                    archiveFilePatterns: '**/*.zip'
-                    destinationFolder: '$(System.DefaultWorkingDirectory)/unzip/$(Build.BuildId)'
-                    cleanDestinationFolder: true
-                    overwriteExistingFiles: false
-
