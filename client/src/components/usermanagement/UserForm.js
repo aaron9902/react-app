@@ -5,7 +5,7 @@ import axios from 'axios';
 const UserForm = () => {
     const userContext = useContext(UserContext);
 
-    const { addUser, updateUser, clearCurrent, current } = userContext;
+    const { clearCurrent, current } = userContext;
 
     useEffect(() => {
         if (current !== null) {
@@ -28,12 +28,13 @@ const UserForm = () => {
         role: '0'
     });
 
-    const { _id, name, email, password } = user;
+    const { _id, name, email } = user;
 
     const role = user.role.toString();
 
     const onChange = e => setUser({ ...user, [e.target.name]: e.target.value});
 
+// Update user's details if there is a user in current. Otherwise Add the user.
     const onSubmit = e => {
         e.preventDefault();
         if (current === null) {
@@ -62,7 +63,7 @@ const UserForm = () => {
             <input type="password" placeholder="password" name="password" defaultValue='' onChange={onChange} required={!current} />
             <h4>User Role</h4>
             <input type="radio" name="role" value="0" checked={ role ==="0" } onChange={onChange} /> User{' '}
-            <input type="radio" name="role" value="1" checked={ role ==="1" } onChange={onChange} /> Staff{' '}
+            <input type="radio" name="role" value="2" checked={ role ==="2" } onChange={onChange} /> Moderator{' '}
             <div>
                 <input type="submit" value={current ? 'Update User Details' : 'Add a User'} className="btn btn-primary btn-block" />
             </div>

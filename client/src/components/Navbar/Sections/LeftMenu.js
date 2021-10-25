@@ -13,6 +13,9 @@ function LeftMenu(props) {
       {user.userData && user.userData.isAuth && user.userData.role == 1 ? (
           <a href={"/usermanagement"}>User Management</a>
       ) : null}
+      {user.userData && user.userData.isAuth && (user.userData.role == 1 || user.userData.role == 2) ? (
+          <a href={"/reportmanagement"}>Report Management</a>
+      ) : null}
     </div>
   )
 }

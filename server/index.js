@@ -24,6 +24,7 @@ mongoose.connect(config.mongoURI, {
 app.use('/api/users', require('./routes/users'));
 app.use('/api/forums', require('./routes/forums'));
 app.use('/api/threads', require('./routes/threads'));
+app.use('/api/reports', require('./routes/reports'));
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

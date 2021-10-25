@@ -3,11 +3,13 @@ import { withRouter } from 'react-router-dom';
 import { BrowserRouter as Router, Link, useParams } from "react-router-dom";
 import axios from 'axios';
 import moment from 'moment';
+import Popup from 'reactjs-popup';
 
 function ThreadSelect() {
   const [isError, setError] = useState(false);
   const { threadID } = useParams(); //getting threadID from url
   const [threadData, setThreadData] = useState("");
+  const [reportDesc, setReportDesc] = useState("");
 
   useEffect(() => { //get thread info
     let isMounted = true;
@@ -23,6 +25,17 @@ function ThreadSelect() {
   useEffect(()=> {
     document.title = !threadData.title ? document.title : threadData.title + " : " + threadData.forumParent.title;
   })
+
+// Create a report ticket
+  const post = () => {
+    var data = {
+      desc: reportDesc,
+      reportedThread: threadID
+    };
+    axios.post('/api/reports', data).then((res) => {
+      console.log(res);
+    })
+  }
 
   return (
     isError ? <p>Thread not found</p> : threadData == "" ? null : //wait for threadData to be fetched
@@ -44,6 +57,25 @@ function ThreadSelect() {
           />
           <br />
           <button className="btn">Comment</button>
+          <Popup trigger={<button className='btn btn-danger'>Report</button>} modal>
+            <div className="container">
+              <br />
+              <h1 className='text-center'>Report Thread</h1>
+              <h2>Reason:</h2>
+              <form onSubmit={post} action={"/forums/" + threadData.forumParent._id + "/thread/" + threadID}>
+                <textarea
+                  placeholder="Why are you reporting this thread?"
+                  defaultValue={''}
+                  onChange={e => setReportDesc(e.target.value)}
+                  required
+                  rows={8}
+                  maxLength="300"
+                  style={{ width: "100%", whiteSpace: "pre-line" }}
+                />
+                <button className=" vertical-center btn btn-danger" type="submit" style={{ marginTop: 10 }}>Send Report</button>
+              </form>
+            </div>
+          </Popup>
         </div>
         <p>Comments go here</p>
       </div>

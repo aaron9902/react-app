@@ -1,11 +1,11 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react';
 import UserItem from './UserItem';
-import UserContext from '../../context/users/userContext';
 import axios from 'axios';
 
 const Users = () => {
     const [users, setUsers] = useState([]); 
 
+// Get all users and update the users state
     useEffect(() => {
         let isMounted = true; 
         axios.get('/api/users/').then((res) => { 
