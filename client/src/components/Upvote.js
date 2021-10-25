@@ -28,19 +28,27 @@ function Upvote(props) {
       if (isMounted) {
         setVotes(res.data.upvotes);
         setThreadData(res.data);
-        if (loggedIn) {
-          axios.get('/api/users/upvotes/' + user.userData._id).then((res) => { //get user's up/downvotes array
-            setUserUpvoteData(res.data);
-          })
-          axios.get('/api/users/downvotes/' + user.userData._id).then((res) => {
-            setUserDownvoteData(res.data);
-          })
-        }
         setLoading(false);
       }
     })
     return () => { isMounted = false };
   }, [])
+
+  useEffect(() => {
+    let isMounted = true;
+    if (loggedIn) {
+      axios.get('/api/users/upvotes/' + user.userData._id).then((res) => { //get user's up/downvotes array
+        if (isMounted) {
+          setUserUpvoteData(res.data);
+          axios.get('/api/users/downvotes/' + user.userData._id).then((res) => {
+            if (isMounted)
+            setUserDownvoteData(res.data);
+          })
+        }
+      })
+    }
+    return () => { isMounted = false };
+  }, [loggedIn])
 
   useEffect(() => { //setting initial voteStatus for pre-existing votes
     if (initialLoad && threadData) { //check initialLoad so the setting only occurs once
