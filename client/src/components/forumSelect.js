@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Link, useParams } from "react-router-dom";
 import axios from 'axios';
 import moment from 'moment';
 import Upvote from './Upvote'
+import { useSelector } from "react-redux";
+import Popup from 'reactjs-popup';
 
 function ForumSelect() {
   const [isLoading, setLoading] = useState(true);
@@ -13,7 +15,14 @@ function ForumSelect() {
   const [forumData, setForumData] = useState("");
   const [searchName, setSearchName] = useState(""); //store inputs from the search bar
 
+  const user = useSelector(state => state.user);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [open, openPopup] = useState(false);
+
+  const [display, setDisplay] = useState(0); //0 = newest (default), 1 = oldest, 2 = most upvotes, 3 = least upvotes
+
   useEffect(() => {
+    setLoggedIn(user.userData && user.userData.isAuth)
     let isMounted = true;
     axios.get('/api/forums/' + id).then((res) => {
       if (isMounted) {
@@ -40,14 +49,47 @@ function ForumSelect() {
     });
   }
 
+  const findByDate = (num) => {
+    if (searchName) {
+      axios.get('/api/threads/sort/date/' + id + '/' + num + '/' + searchName).then((res) => {
+        setThreadData(res.data);
+      })
+    } else {
+      axios.get('/api/threads/sort/date/' + id + '/' + num).then((res) => {
+        setThreadData(res.data);
+      })
+    }
+  }
+
+  const findByUpvotes = (num) => {
+    if (searchName) {
+      axios.get('/api/threads/sort/upvotes/' + id + '/' + num + '/' + searchName).then((res) => {
+        setThreadData(res.data);
+      })
+    } else {
+      axios.get('/api/threads/sort/upvotes/' + id + '/' + num).then((res) => {
+        setThreadData(res.data);
+      })
+    }
+  }
+
+  const ConditionalLink = ({ to, condition }) => (!!condition && to)
+    ? <Link to={"/forums/" + id + "/post"}>Post a thread</Link>
+    : <a onClick={() => { openPopup(true) }}>Post a thread</a>;
+
   return ( //display forum that was clicked on and its threads
     isError ? <p>Forum not found</p> : isLoading ? null :
       <div className="container">
         <h1>{forumData.title}</h1>
         <p>{forumData.desc}</p>
-        <Link to={"/forums/" + id + "/post"}>
-          <p>Post a thread</p>
-        </Link>
+        <ConditionalLink to={"/forums/" + id + "/post"} condition={loggedIn} />
+        <Popup open={open} onClose={() => { openPopup(false) }} modal>
+          <div className="container">
+            <br />
+            <p style={{ textAlign: 'center' }}>You must be logged in to post threads.</p>
+            <a href='/login'><button className='vertical-center btn'>Login</button></a>
+          </div>
+        </Popup>
         <div className="flex">
           <input
             type="text"
@@ -57,12 +99,20 @@ function ForumSelect() {
           />
           <button className="search-bar btn-primary" type="button" onClick={find}>Search</button>
         </div>
+
+        <div>
+          <a onClick={() => { setDisplay(0); findByDate(-1) }}><p className={`profile-navbar ${display == 0 ? "profile-nav-active" : ""}`}>Newest</p></a>
+          <a onClick={() => { setDisplay(1); findByDate(1) }}><p className={`profile-navbar ${display == 1 ? "profile-nav-active" : ""}`}>Oldest</p></a>
+          <a onClick={() => { setDisplay(2); findByUpvotes(-1) }}><p className={`profile-navbar ${display == 2 ? "profile-nav-active" : ""}`}>Top</p></a>
+          <a onClick={() => { setDisplay(3); findByUpvotes(1) }}><p className={`profile-navbar ${display == 3 ? "profile-nav-active" : ""}`}>Bottom</p></a>
+        </div>
+
         {threadData == "" ? <p>No threads found</p> :
           <ul>
             {threadData.map(thread => (
               <li key={thread._id} className='card thread-grid'>
                 <div>
-                  <Upvote id={thread._id}/>
+                  <Upvote id={thread._id} />
                 </div>
                 <div>
                   <Link to={"/forums/" + id + '/thread/' + thread._id}>

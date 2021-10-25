@@ -205,7 +205,19 @@ router.get('/logout', auth, (req, res) => {
 async function getUser(req, res, next) {
   let user;
   try {
-    user = await User.findById(req.params.id);
+    user = await User.findById(req.params.id)
+      .populate({
+        path: 'upvotes',
+        populate: {
+          path: 'userParent forumParent'
+        }
+      })
+      .populate({
+        path: 'downvotes',
+        populate: {
+          path: 'userParent forumParent'
+        }
+      });
     if (user == null)
       return res.status(404).json({ message: 'User does not exist' });
   } catch (err) {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Popup from 'reactjs-popup';
 
 import { useSelector } from "react-redux";
 
@@ -14,9 +15,14 @@ function Upvote(props) {
   const [userUpvoteData, setUserUpvoteData] = useState([]);
   const [userDownvoteData, setUserDownvoteData] = useState([]);
 
-  const user = useSelector(state => state.user)
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [open, openPopup] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+
+  const user = useSelector(state => state.user);
 
   useEffect(() => {
+    setLoggedIn(user.userData && user.userData.isAuth)
     let isMounted = true;
     axios.get('/api/threads/' + props.id).then((res) => { //get thread information
       if (isMounted) {
@@ -27,6 +33,7 @@ function Upvote(props) {
         })
         axios.get('/api/users/downvotes/' + user.userData._id).then((res) => {
           setUserDownvoteData(res.data);
+          setLoading(false);
         })
       }
     })
@@ -35,8 +42,8 @@ function Upvote(props) {
 
   useEffect(() => { //setting initial voteStatus for pre-existing votes
     if (initialLoad && threadData) { //check initialLoad so the setting only occurs once
-      userUpvoteData.includes(threadData._id) ? setStatus(1) :
-        userDownvoteData.includes(threadData._id) ? setStatus(-1) :
+      userUpvoteData.some(el => el._id == threadData._id) ? setStatus(1) :
+        userDownvoteData.some(el => el._id == threadData._id) ? setStatus(-1) :
           setStatus(0);
     }
   })
@@ -56,6 +63,10 @@ function Upvote(props) {
   }, [voteStatus, buttonPressed]);
 
   const vote = (num) => {
+    if (!loggedIn) {
+      openPopup(true);
+      return;
+    }
     if (num == -1) { //if thread is downvoted:
       switch (voteStatus) {
         case 1: //if previously upvoted, downvote by 2 and set status to downvoted
@@ -92,10 +103,18 @@ function Upvote(props) {
   }
 
   return (
+    isLoading ? null : 
     <div className="upvote">
       <a className="upvote-btn" onClick={() => { vote(1) }}><p>{voteStatus != -1 && voteStatus == 1 ? '\uD83E\uDC45' : '\u21E7'}</p></a>
       <p>{votes}</p>
       <a className="upvote-btn" onClick={() => { vote(-1) }}><p>{voteStatus != 1 && voteStatus == -1 ? '\uD83E\uDC47' : '\u21E9'}</p></a>
+      <Popup open={open} onClose={() => {openPopup(false)}} modal>
+        <div className="container">
+          <br />
+          <p style={{ textAlign: 'center' }}>You must be logged in to vote threads.</p>
+          <a href='/login'><button className='vertical-center btn'>Login</button></a>
+        </div>
+      </Popup>
     </div>
   );
 }

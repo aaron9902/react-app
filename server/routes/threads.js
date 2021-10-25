@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Thread  = require('../models/threads');
+const Thread = require('../models/threads');
 
 // Get threads
 router.get('/', async (req, res) => {
@@ -17,13 +17,59 @@ router.get('/:id', getThread, (req, res) => {
     res.json(res.thread);
 });
 
-// Get threads by name (have to include /search/ as it think its searching by ID)
+// Get threads by name
 router.get('/:id/:name', async (req, res) => {
-    const threads = await Thread.find({ 
+    const threads = await Thread.find({
         forumParent: (req.params.id),
-        title: { $regex: (req.params.name), $options: 'i' } 
+        title: { $regex: (req.params.name), $options: 'i' }
     }).populate('userParent');
     res.json(threads);
+});
+
+//Get threads by ascending/descending upvotes depending on 'type' parameter (-1 descending, 1 ascending)
+router.get('/sort/upvotes/:id/:type/:name', async (req, res) => {
+    try {
+        const threads = await Thread.find({
+            forumParent: (req.params.id),
+            title: { $regex: (req.params.name), $options: 'i' }
+        }).sort({ upvotes: (req.params.type) }).populate('userParent');
+        res.json(threads)
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+router.get('/sort/upvotes/:id/:type/', async (req, res) => {
+    try {
+        const threads = await Thread.find({
+            forumParent: (req.params.id)
+        }).sort({ upvotes: (req.params.type) }).populate('userParent');
+        res.json(threads)
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+//Get threads by ascending/descending date depending on 'type' parameter (-1 descending, 1 ascending)
+router.get('/sort/date/:id/:type', async (req, res) => {
+    try {
+        const threads = await Thread.find({
+            forumParent: (req.params.id)
+        }).sort({ date: (req.params.type) }).populate('userParent');
+        res.json(threads)
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+router.get('/sort/date/:id/:type/:name', async (req, res) => {
+    try {
+        const threads = await Thread.find({ 
+            forumParent: (req.params.id),
+            title: { $regex: (req.params.name), $options: 'i' }
+         }).sort({ date: (req.params.type) }).populate('userParent');
+        res.json(threads)
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 });
 
 // Create thread
@@ -42,6 +88,7 @@ router.post('/', async (req, res) => {
     }
 });
 
+//increment/decrement a threads vote counts by 1/-1
 router.patch('/upvote/:id', getThread, async (req, res) => {
     res.thread.upvotes += req.body.num;
     try {
@@ -54,7 +101,7 @@ router.patch('/upvote/:id', getThread, async (req, res) => {
 
 // Update thread by ID
 router.patch('/:id', getThread, async (req, res) => {
-    if (req.body.title != null) 
+    if (req.body.title != null)
         res.thread.title = req.body.title;
     if (req.body.desc != null)
         res.thread.desc = req.body.desc;
@@ -80,7 +127,7 @@ router.delete('/:id', getThread, async (req, res) => {
 router.delete('/parent/:id', async (req, res) => {
     try {
         await Thread.deleteMany({ userParent: (req.params.id) })
-        res.json({message: 'Threads deleted' });
+        res.json({ message: 'Threads deleted' });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

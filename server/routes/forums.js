@@ -30,7 +30,7 @@ router.get('/name_search/:title', async (req, res) => {
 
 // Get threads by forum ID
 router.get('/:id/threads', async (req, res) => {
-    const threads = await Thread.find({ forumParent: (req.params.id) }).populate('userParent');
+    const threads = await Thread.find({ forumParent: (req.params.id) }).sort({ date: -1 }).populate('userParent');
     res.json(threads);
 });
 

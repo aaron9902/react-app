@@ -28,7 +28,7 @@ function ThreadSelect() {
     isError ? <p>Thread not found</p> : threadData == "" ? null : //wait for threadData to be fetched
       <div className="container">
         <Link to={'/forums/' + threadData.forumParent._id}>
-          <h1>{'\u2B05'} {threadData.forumParent.title}</h1>
+          <h1 className="profile-navbar">{'\u2B05'} {threadData.forumParent.title}</h1>
         </Link>
         <h2>{threadData.title}</h2>
         <p style={{ whiteSpace: 'pre-line' }}>{threadData.desc}</p>

@@ -260,6 +260,7 @@ img {
 .alert-primary {
   background: var(--primary-color);
   color: #fff;
+  cursor: pointer;
 }
 
 .btn-light,
@@ -370,6 +371,7 @@ button {
   margin-top:20px;
   height:45px;
   padding: 5px;
+  cursor: pointer;
 }
 
 .vertical-center {
@@ -421,6 +423,23 @@ table th {
   padding: 1rem 2rem;
   width: 100%;
   opacity: 0.9;
+}
+
+.profile-navbar {
+  color: #003699;
+  display: inline-block;
+  margin-right: 20px;
+}
+.profile-navbar:hover {
+  color: #666;
+}
+
+.profile-nav-active {
+  text-decoration: underline;
+}
+.profile-nav-active:hover {
+  cursor:default;
+  color: #003699;
 }
 
 .navbar ul {
