@@ -18,9 +18,15 @@ function Forums() {
   }, []);
 
   const find = () => {
-    axios.get('/api/forums/name_search/' + searchName).then((res) => {
-      setForumData(res.data);
-    });
+    if (searchName && searchName.trim()) {
+      axios.get('/api/forums/name_search/' + searchName).then((res) => {
+        setForumData(res.data);
+      });
+    } else {
+      axios.get('/api/forums').then((res) => { 
+        setForumData(res.data); 
+      })
+    }
   }
 
   return (
