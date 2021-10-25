@@ -45,20 +45,10 @@ stages:
           - task: CopyFiles@2
             inputs:
               SourceFolder: '$(System.DefaultWorkingDirectory)'
-              Contents: $(System.DefaultWorkingDirectory)/server/*.js
-                        $(System.DefaultWorkingDirectory)/package.json
-                        $(System.DefaultWorkingDirectory)/yarn.lock
               TargetFolder: '$(Build.ArtifactStagingDirectory)'
               OverWrite: true
               ignoreMakeDirErrors: true
-            displayName: 'Copy SERVER files to artifact directory'
-          - task: CopyFiles@2
-            inputs:
-              SourceFolder: '$(System.DefaultWorkingDirectory)'
-              Contents: $(System.DefaultWorkingDirectory)/client/src/**/*
-                        $(System.DefaultWorkingDirectory)/client/package.json
-              TargetFolder: '$(Build.ArtifactStagingDirectory)'
-            displayName: 'Copy CLIENT files to artifact directory'
+            displayName: 'Copy files to artifact directory'
           - task: ArchiveFiles@2
             displayName: 'Archive files'
             inputs:
@@ -85,3 +75,13 @@ stages:
         environment: 'production'
         pool:
           vmImage: $(vmImageName)
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: ExtractFiles@1
+                  inputs:
+                    archiveFilePatterns: '**/*.zip'
+                    destinationFolder: '$(System.DefaultWorkingDirectory)\**\*.zip'
+                    cleanDestinationFolder: true
+                    overwriteExistingFiles: false
