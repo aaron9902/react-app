@@ -34,6 +34,7 @@ const UserForm = () => {
 
     const onChange = e => setUser({ ...user, [e.target.name]: e.target.value});
 
+// Update user's details if there is a user in current. Otherwise Add the user.
     const onSubmit = e => {
         e.preventDefault();
         if (current === null) {

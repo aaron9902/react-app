@@ -3,14 +3,13 @@ import UserContext from '../../context/users/userContext';
 import PropTypes from 'prop-types'
 import axios from 'axios';
 
-
-
 const UserItem = ({ user }) => {
     const userContext = useContext(UserContext);
     const { setCurrent } = userContext;
 
     const { _id, name, email, role } = user;
 
+// Deletes user's existing threads and then delete the user after. Admins cannot be deleted
     const onDelete = () => {
         axios.delete('/api/threads/parent/' + _id).then((res) => {
             console.log("User's threads deleted")
@@ -28,8 +27,8 @@ const UserItem = ({ user }) => {
         <div className='card bg-light'>
             <h3 className="text-left">
                 {name}{' '}
-                {<span style = {{ float: 'right' }}
-                 className={'badge ' + (role === 0 ? 'badge-success' : role === 1 ? 'badge-danger' : 'badge-primary')}>{(role === 0 ? 'User' : role === 1 ? 'Admin' : 'Moderator')}</span>                
+                {<span style={{ float: 'right' }}
+                    className={'badge ' + (role === 0 ? 'badge-success' : role === 1 ? 'badge-danger' : 'badge-primary')}>{(role === 0 ? 'User' : role === 1 ? 'Admin' : 'Moderator')}</span>
                 }
             </h3>
             <ul className="list">

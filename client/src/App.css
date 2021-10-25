@@ -57,6 +57,10 @@ img {
   text-align: center;
 }
 
+.text-danger {
+  color: var(--danger-color);
+}
+
 .text-primary {
   color: var(--primary-color);
 }
@@ -293,6 +297,6 @@ table th {
   margin: 0 2rem;
 }
 
- .navbar a:hover {
+ /* .navbar a:hover {
   color: var(--light-color);
-} 
+}  */

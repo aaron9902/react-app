@@ -5,6 +5,7 @@ import axios from 'axios';
 const Users = () => {
     const [users, setUsers] = useState([]); 
 
+// Get all users and update the users state
     useEffect(() => {
         let isMounted = true; 
         axios.get('/api/users/').then((res) => { 
