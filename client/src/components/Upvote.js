@@ -28,13 +28,15 @@ function Upvote(props) {
       if (isMounted) {
         setVotes(res.data.upvotes);
         setThreadData(res.data);
-        axios.get('/api/users/upvotes/' + user.userData._id).then((res) => { //get user's up/downvotes array
-          setUserUpvoteData(res.data);
-        })
-        axios.get('/api/users/downvotes/' + user.userData._id).then((res) => {
-          setUserDownvoteData(res.data);
-          setLoading(false);
-        })
+        if (loggedIn) {
+          axios.get('/api/users/upvotes/' + user.userData._id).then((res) => { //get user's up/downvotes array
+            setUserUpvoteData(res.data);
+          })
+          axios.get('/api/users/downvotes/' + user.userData._id).then((res) => {
+            setUserDownvoteData(res.data);
+          })
+        }
+        setLoading(false);
       }
     })
     return () => { isMounted = false };
@@ -103,19 +105,19 @@ function Upvote(props) {
   }
 
   return (
-    isLoading ? null : 
-    <div className="upvote">
-      <a className="upvote-btn" onClick={() => { vote(1) }}><p>{voteStatus != -1 && voteStatus == 1 ? '\uD83E\uDC45' : '\u21E7'}</p></a>
-      <p>{votes}</p>
-      <a className="upvote-btn" onClick={() => { vote(-1) }}><p>{voteStatus != 1 && voteStatus == -1 ? '\uD83E\uDC47' : '\u21E9'}</p></a>
-      <Popup open={open} onClose={() => {openPopup(false)}} modal>
-        <div className="container">
-          <br />
-          <p style={{ textAlign: 'center' }}>You must be logged in to vote threads.</p>
-          <a href='/login'><button className='vertical-center btn'>Login</button></a>
-        </div>
-      </Popup>
-    </div>
+    isLoading ? null :
+      <div className="upvote">
+        <a className="upvote-btn" onClick={() => { vote(1) }}><p>{voteStatus != -1 && voteStatus == 1 ? '\uD83E\uDC45' : '\u21E7'}</p></a>
+        <p>{votes}</p>
+        <a className="upvote-btn" onClick={() => { vote(-1) }}><p>{voteStatus != 1 && voteStatus == -1 ? '\uD83E\uDC47' : '\u21E9'}</p></a>
+        <Popup open={open} onClose={() => { openPopup(false) }} modal>
+          <div className="container">
+            <br />
+            <p style={{ textAlign: 'center' }}>You must be logged in to vote threads.</p>
+            <a href='/login'><button className='vertical-center btn'>Login</button></a>
+          </div>
+        </Popup>
+      </div>
   );
 }
 

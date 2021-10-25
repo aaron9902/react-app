@@ -44,9 +44,15 @@ function ForumSelect() {
   })
 
   const find = () => { //function that calls backend thread search by name
-    axios.get('/api/threads/' + id + '/' + searchName).then((res) => {
-      setThreadData(res.data);
-    });
+    if (searchName) {
+      axios.get('/api/threads/' + id + '/' + searchName).then((res) => {
+        setThreadData(res.data);
+      });
+    } else {
+      axios.get('/api/forums/' + id + '/threads').then((res) => {
+        setThreadData(res.data);
+      });
+    }
   }
 
   const findByDate = (num) => {
